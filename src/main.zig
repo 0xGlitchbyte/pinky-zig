@@ -1,9 +1,12 @@
 const std = @import("std");
+const token = @import("./tokens.zig");
+const lexer = @import("./lexer.zig");
 
 pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
-    defer _ = gpa.deinit();
+    var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
+    defer arena.deinit();
+
+    const allocator = arena.allocator();
 
     const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
@@ -23,3 +26,18 @@ pub fn main() !void {
 
     std.debug.print("{s}\n{s}", .{ filename, source });
 }
+
+// literals
+// identifiers
+// keywords
+// operators
+// expressions
+// statements
+// blocks
+//
+// Tokenizer == Lexer == Scanner
+//  - Finds list of tokens
+//      - e.g. (TOK_IDENTIFIER, 'int')
+//
+// Abstract Syntax Tree (AST)
+//
