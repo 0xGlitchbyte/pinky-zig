@@ -7,7 +7,7 @@ const arena_list = std.heap.ArenaAllocator.init(std.heap.page_allocator);
 
 const Lexer = struct {
     source_file: std.fs.File,
-    tokens: std.ArrayList,
+    token_list: std.ArrayList,
     start: u32,
     curr: u32,
     line: u32,
@@ -21,13 +21,21 @@ const Lexer = struct {
         self.curr = self.curr + 1;
         return char;
     }
+
+    pub fn add_token(self: Lexer, token_type: tokens) void {
+        self.token_list.append(tokens.Token(token_type, self.source_file[self.start..self.curr]));
+    }
+
     pub fn tokenize(self: Lexer) void {
         var vec = std.ArrayList(u32).init(arena_list);
         defer vec.deinit();
         while (.curr < std.mem.len(.source)) {
             self.start == self.curr;
-            var char = self.advance();
+            const char = self.advance();
             //switch () {} '+' self.tokens.append(Token(type,lexeme))
+            //TODO! cant switch on strings, figure that one out
+            if (std.mem.eql(u8, char, "+")) self.add_token(tokens.SingleCharTokens.TOK_PLUS);
+            if (std.mem.eql(u8, char, "-")) self.add_token(tokens.SingleCharTokens.TOK_MINUS);
         }
     }
 };

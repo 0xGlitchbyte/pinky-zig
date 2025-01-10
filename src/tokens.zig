@@ -5,7 +5,7 @@
 const std = @import("std");
 const token = @import("./tokens.zig");
 
-const SingleCharTokens = enum {
+pub const SingleCharTokens = enum {
     TOK_LPAREN,
     TOK_RPAREN,
     TOK_LCURLY,
@@ -28,7 +28,7 @@ const SingleCharTokens = enum {
     TOK_LT, //  <
 };
 
-const TwoCharToken = enum {
+pub const TwoCharToken = enum {
     TOK_GE, //  >=
     TOK_LE, //  <=
     TOK_NE, //  ~=
@@ -38,14 +38,14 @@ const TwoCharToken = enum {
     TOK_LTLT, //  <<
 };
 
-const Literals = enum {
+pub const Literals = enum {
     TOK_IDENTIFIER,
     TOK_STRING,
     TOK_INTEGER,
     TOK_FLOAT,
 };
 
-const Keywords = enum {
+pub const Keywords = enum {
     TOK_IF,
     TOK_THEN,
     TOK_ELSE,
@@ -64,7 +64,7 @@ const Keywords = enum {
     TOK_RET,
 };
 
-const Token = struct {
+pub const Token = struct {
     token_type: []const u8,
     lexeme: []const u8,
 

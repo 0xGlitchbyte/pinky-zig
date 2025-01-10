@@ -1,7 +1,7 @@
 const std = @import("std");
 const token = @import("./tokens.zig");
 const lexer = @import("./lexer.zig");
-const print = std.debug.print();
+const debug = std.debug;
 
 pub fn main() !void {
     var arena = std.heap.ArenaAllocator.init(std.heap.page_allocator);
@@ -25,10 +25,10 @@ pub fn main() !void {
     const source = try file.readToEndAlloc(allocator, std.math.maxInt(usize));
     defer allocator.free(source);
 
-    print("Lexer:\n");
+    debug.print("Lexer:\n", null);
     const tokens = lexer(source).tokenize();
     for (tokens) |item| {
-        print("{s}\n", .{item});
+        debug.print("{s}\n", .{item});
     }
 }
 
