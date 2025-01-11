@@ -26,7 +26,8 @@ pub fn main() !void {
     defer allocator.free(source);
 
     debug.print("Lexer:\n", null);
-    const tokens = lexer(source).tokenize();
+    const lex = lexer.Lexer.init(source);
+    const tokens = lex.tokenize(source);
     for (tokens) |item| {
         debug.print("{s}\n", .{item});
     }
