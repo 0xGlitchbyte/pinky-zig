@@ -22,11 +22,14 @@ pub fn main() !void {
     const file = try std.fs.cwd().openFile(filename, .{});
     defer file.close();
 
-    const source = try file.readToEndAlloc(allocator, std.math.maxInt(usize));
+    const source = try file.readToEndAlloc(allocator, std.math.maxInt(u32));
     defer allocator.free(source);
 
-    debug.print("Lexer:\n", null);
-    //const lex = lexer.Lexer.init(source, undefined, undefined, undefined, undefined);
+    debug.print("File content: {s}\n", .{source});
+
+    //const lex = lexer.Lexer.init(undefined, source, undefined, undefined, undefined);
+
+    //debug.print("Lexer:\n", lex);
 
     //const tokens = lex.tokenize();
     //for (tokens) |item| {

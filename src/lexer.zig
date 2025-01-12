@@ -96,10 +96,3 @@ pub const Lexer = struct {
         return self.token_list;
     }
 };
-
-test "Build lexer struct" {
-    fn build() Lexer {
-        const lex = Lexer.init(
-            token_list: std.ArrayList(u32), source_file: []u8, start: u32, curr: u32, line: u32);
-    }
-}
