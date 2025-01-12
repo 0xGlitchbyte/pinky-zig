@@ -12,17 +12,17 @@ const lit = tokens.Literals;
 const kwd = tokens.Keywords;
 
 pub const Lexer = struct {
-    source_file: std.fs.File,
     token_list: std.ArrayList(u32),
-    start: u32,
-    curr: u32,
-    line: u32,
+    source_file: []u8,
+    start: u32 = 0,
+    curr: u32 = 0,
+    line: u32 = 0,
 
-    pub fn init(source_file: std.fs.File) Lexer {
-        return Lexer{ .source_file = source_file };
+    pub fn init(token_list: std.ArrayList(u32), source_file: []u8, start: u32, curr: u32, line: u32) Lexer {
+        return Lexer{ .source_file = source_file, .token_list = token_list, .start = start, .curr = curr, .line = line };
     }
 
-    pub fn advance(self: Lexer) void {
+    pub fn advance(self: Lexer) u8 {
         const char = self.source_file[self.curr];
         self.curr = self.curr + 1;
         return char;
@@ -32,9 +32,7 @@ pub const Lexer = struct {
         self.token_list.append(tokens.Token(token_type, self.source_file[self.start..self.curr]));
     }
 
-    pub fn tokenize(self: Lexer) void {
-        var vec = std.ArrayList(u32).init(arena_list);
-        defer vec.deinit();
+    pub fn tokenize(self: Lexer) std.ArrayList(u32) {
         while (.curr < mem.len(.source)) {
             self.start == self.curr;
             const char = self.advance();
@@ -98,3 +96,10 @@ pub const Lexer = struct {
         return self.token_list;
     }
 };
+
+test "Build lexer struct" {
+    fn build() Lexer {
+        const lex = Lexer.init(
+            token_list: std.ArrayList(u32), source_file: []u8, start: u32, curr: u32, line: u32);
+    }
+}

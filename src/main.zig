@@ -26,11 +26,12 @@ pub fn main() !void {
     defer allocator.free(source);
 
     debug.print("Lexer:\n", null);
-    const lex = lexer.Lexer.init(source);
-    const tokens = lex.tokenize(source);
-    for (tokens) |item| {
-        debug.print("{s}\n", .{item});
-    }
+    //const lex = lexer.Lexer.init(source, undefined, undefined, undefined, undefined);
+
+    //const tokens = lex.tokenize();
+    //for (tokens) |item| {
+    //    debug.print("{s}\n", .{item});
+    //}
 }
 
 // literals
