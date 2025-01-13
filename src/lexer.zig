@@ -12,14 +12,24 @@ const lit = tokens.Literals;
 const kwd = tokens.Keywords;
 
 pub const Lexer = struct {
-    token_list: std.ArrayList(u32),
     source_file: []u8,
+    token_list: std.ArrayList(u32),
     start: u32 = 0,
     curr: u32 = 0,
-    line: u32 = 0,
+    line: u32 = 1,
 
-    pub fn init(token_list: std.ArrayList(u32), source_file: []u8, start: u32, curr: u32, line: u32) Lexer {
-        return Lexer{ .source_file = source_file, .token_list = token_list, .start = start, .curr = curr, .line = line };
+    pub fn init(allocator: std.mem.Allocator, source_file: []u8) Lexer {
+        return .{ .source_file = source_file, .token_list = std.ArrayList(u32).init(allocator), .start = 0, .curr = 0, .line = 1 };
+    }
+
+    pub fn deinit(self: *Lexer) void {
+        self.token_list.deinit();
+    }
+
+    pub fn format(self: Lexer, comptime fmt: []const u8, options: std.fmt.FormatOptions, writer: anytype) !void {
+        _ = fmt;
+        _ = options;
+        try writer.print("Lexer: {{.token_list = {[]s} }}", self);
     }
 
     pub fn advance(self: Lexer) u8 {

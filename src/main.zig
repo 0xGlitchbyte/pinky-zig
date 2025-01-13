@@ -27,7 +27,8 @@ pub fn main() !void {
 
     debug.print("File content: {s}\n", .{source});
 
-    //const lex = lexer.Lexer.init(undefined, source, undefined, undefined, undefined);
+    var lex = lexer.Lexer.init(allocator, source);
+    defer lex.deinit();
 
     //debug.print("Lexer:\n", lex);
 
